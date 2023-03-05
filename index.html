@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zèudi.23</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/png" href="./transparent-logo.png">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700|Montserrat:600" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/playsinline@1.4.0/dist/playsinline.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/8d7e2d832c.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <nav id="navbar" class="navbar navbar-expand-md navbar-light bg-light">
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+            <label class="logo">
+                <img src="./transparent-logo.png">
+                <a href="#homePage">Zèudi.23</a>
+            </label>
+            <ul>
+                <li><a href="#homePage">Home</a></li>
+                <li><a href="#chisonoPage">Chi sono</a></li>
+                <li><a href="#prodottiPage">Prodotti</a></li>
+                <li><a href="#contattiPage">Contatti</a></li>
+            </ul>
+        </nav>
+        <div id="homePage">
+            <video id="video-player" src="./videoLV.mp4" autoplay muted loop playsinline=true></video>
+            <h1>GIOIELLI FATTI A MANO</h1>
+        </div>
+        <div id="chisonoPage">
+            <div class="title">
+                <h1>CHI SONO</h1>
+            </div>
+            <section class="about">
+                <div class="main">
+                    <img src="./immagini/aboutImg.jpg">
+                    <div class="about-text">
+                        <h1>Deana Girardi</h1>
+                        <h5>Lorem ipsum dolor sit amet.</h5>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</p>
+                        <a href="https://www.instagram.com/zeudi.23__/" target="_blank"><button type="button">Contattami</button></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div id="prodottiPage">
+            <div class="title">
+                <h1>PRODOTTI</h1>
+            </div>
+            <div class="container-images">
+                <div class="wrapper">
+                    <i id="left" class="fa-solid fa-angle-left"></i>
+                    <div class="carousel">
+                        <img src="./immagini/img1.jpeg" alt="img" draggable="false">
+                        <img src="./immagini/img3.jpeg" alt="img" draggable="false">
+                        <img src="./immagini/img2.jpeg" alt="img" draggable="false">
+                        <img src="./immagini/img4.jpeg" alt="img" draggable="false">
+                        <img src="./immagini/img5.jpeg" alt="img" draggable="false">
+                    </div>
+                    <i id="right" class="fa-solid fa-angle-right"></i>
+                </div>
+            </div>
+            <div class="sdpSection">
+                <a href="./galleria/index.html" target="_blank"><button type="button">Scopri di più</button></a>
+            </div>
+        </div>
+        <div id="contattiPage">
+            <div class="title">
+                <h1>CONTATTI</h1>
+            </div>
+            <div class="contattiDescrizione">
+                <p>Sono a tua disposizione per qualsiasi informazione o richiesta, non esitare a contattarmi attraverso i miei recapiti qui di seguito.</p>
+            </div>
+            <div class="contatti">
+                <a href="https://www.instagram.com/zeudi.23__/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <script src="./script.js"></script>
+        <script>
+            const carousel = document.querySelector(".carousel"),
+            firstImg = carousel.querySelectorAll("img")[0],
+            arrowIcons = document.querySelectorAll(".wrapper i");
+
+            let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
+
+            const showHideIcons = () => {
+                // showing and hiding prev/next icon according to carousel scroll left value
+                let scrollWidth = carousel.scrollWidth - carousel.clientWidth; // getting max scrollable width
+                arrowIcons[0].style.display = carousel.scrollLeft == 0 ? "none" : "block";
+                arrowIcons[1].style.display = carousel.scrollLeft == scrollWidth ? "none" : "block";
+            }
+
+            arrowIcons.forEach(icon => {
+                icon.addEventListener("click", () => {
+                    let firstImgWidth = firstImg.clientWidth + 14; // getting first img width & adding 14 margin value
+                    // if clicked icon is left, reduce width value from the carousel scroll left else add to it
+                    carousel.scrollLeft += icon.id == "left" ? -firstImgWidth : firstImgWidth;
+                    setTimeout(() => showHideIcons(), 60); // calling showHideIcons after 60ms
+                });
+            });
+
+            const autoSlide = () => {
+                // if there is no image left to scroll then return from here
+                if(carousel.scrollLeft - (carousel.scrollWidth - carousel.clientWidth) > -1 || carousel.scrollLeft <= 0) return;
+
+                positionDiff = Math.abs(positionDiff); // making positionDiff value to positive
+                let firstImgWidth = firstImg.clientWidth + 14;
+                // getting difference value that needs to add or reduce from carousel left to take middle img center
+                let valDifference = firstImgWidth - positionDiff;
+
+                if(carousel.scrollLeft > prevScrollLeft) { // if user is scrolling to the right
+                    return carousel.scrollLeft += positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff;
+                }
+                // if user is scrolling to the left
+                carousel.scrollLeft -= positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff;
+            }
+
+            const dragStart = (e) => {
+                // updatating global variables value on mouse down event
+                isDragStart = true;
+                prevPageX = e.pageX || e.touches[0].pageX;
+                prevScrollLeft = carousel.scrollLeft;
+            }
+
+            const dragging = (e) => {
+                // scrolling images/carousel to left according to mouse pointer
+                if(!isDragStart) return;
+                e.preventDefault();
+                isDragging = true;
+                carousel.classList.add("dragging");
+                positionDiff = (e.pageX || e.touches[0].pageX) - prevPageX;
+                carousel.scrollLeft = prevScrollLeft - positionDiff;
+                showHideIcons();
+            }
+
+            const dragStop = () => {
+                isDragStart = false;
+                carousel.classList.remove("dragging");
+
+                if(!isDragging) return;
+                isDragging = false;
+                autoSlide();
+            }
+
+            carousel.addEventListener("mousedown", dragStart);
+            carousel.addEventListener("touchstart", dragStart);
+
+            document.addEventListener("mousemove", dragging);
+            carousel.addEventListener("touchmove", dragging);
+
+            document.addEventListener("mouseup", dragStop);
+            carousel.addEventListener("touchend", dragStop);
+        </script>
+    </body>
+</html>
+
+
+
+
