@@ -323,11 +323,12 @@ label.logo a:hover {
 #contattiPage {
     height: fit-content;
     width: 100%;
-    background-color: black;
+    background-color: #ddcbbe;
 }
 
 #contattiPage .title {
     padding-top: 50px;
+    color: black;
 }
 
 .contattiDescrizione {
@@ -336,11 +337,12 @@ label.logo a:hover {
     align-items: center;
     margin-top: 35px;
     margin-bottom: 50px;
-    color: white;
+    color: black;
     font-size: 18px;
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
+    font-weight: bold;
 }
 
 .contatti {
@@ -493,6 +495,5 @@ label.logo a:hover {
         font-size: 13px;
     }
 }
-
 
 
